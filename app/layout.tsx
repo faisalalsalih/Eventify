@@ -14,7 +14,10 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: 'Eventify',
-  description: 'Eventify is a platform for managing and organizing events. It allows users to create, edit, and delete events, as well as view upcoming events and RSVP to them.',
+  description: 'Eventify is a platform for managing and organizing events. It allows users to create, edit, and delete events.',
+  icons: {
+    icon: '/assets/images/logo.svg'
+  }
 }
 
 export default function RootLayout({
