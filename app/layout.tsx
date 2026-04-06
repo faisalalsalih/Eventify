@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
-import { cn } from "@/lib/utils";
+import { ClerkProvider } from '@clerk/nextjs'
+// import { cn } from "@/lib/utils";
 
 
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   title: 'Eventify',
   description: 'Eventify is a platform for managing and organizing events. It allows users to create, edit, and delete events.',
   icons: {
-    icon: '/assets/images/logo.svg'
+    icon: '/assets/images/logo.png'
   }
 }
 
@@ -26,9 +27,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <body className={poppins.variable}>{children}</body>
     </html>
+    </ClerkProvider>
   )
 }
 

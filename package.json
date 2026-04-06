@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.27.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "font": "^0.0.4",
@@ -25,7 +26,7 @@
     "uploadthing": "^6.0.4"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.19.39",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
