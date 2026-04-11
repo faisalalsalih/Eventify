@@ -1,20 +1,16 @@
-import { Schema, Document, models, model } from 'mongoose';
-
+import { Schema, Document, models, model, Model } from 'mongoose';
 
 export interface ICategory extends Document {
-    _id: string; 
-    name: string;
+  name: string;
 }
- 
+
 const CategorySchema = new Schema({
-    name: { type: String, required: true, unique: true },
+  name: { type: String, required: true, unique: true },
+});
 
-})
-
-
-
-const Category = models.Category || model('Category', CategorySchema);
-
+// This line handles the Next.js singleton pattern correctly
+// It checks if the model exists; if not, it creates it with the correct Type.
+const Category = (models.Category as Model<ICategory>) || model<ICategory>('Category', CategorySchema);
 
 export default Category;
 
