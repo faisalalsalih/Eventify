@@ -9,15 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.27.5",
+    "@clerk/nextjs": "^4.29.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "font": "^0.0.4",
     "geist": "^1.7.0",
     "lucide-react": "^1.7.0",
     "mongodb": "^6.3.0",
     "mongoose": "^9.4.1",
-    "next": "14.0.4",
+    "next": "^14.2.25",
     "query-string": "^8.1.0",
     "radix-ui": "^1.4.3",
     "react": "^18",
