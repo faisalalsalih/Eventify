@@ -18,11 +18,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ] // ✅ tells TS that "@/..." means project root
+      "@/*": ["./*"]
     },
     "plugins": [
       {
