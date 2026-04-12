@@ -1,4 +1,4 @@
-import { Schema, model, models, Document, Model } from 'mongoose'
+import { Schema, model, models, Document } from 'mongoose'
 
 export interface IOrder extends Document {
   createdAt: Date
@@ -47,8 +47,7 @@ const OrderSchema = new Schema({
   },
 })
 
-// ✅ The Fix: Use Model casting to satisfy Next.js and Mongoose 8
-const Order = (models.Order as Model<IOrder>) || model<IOrder>('Order', OrderSchema)
+const Order = models.Order || model('Order', OrderSchema)
 
 export default Order
 
