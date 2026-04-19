@@ -21,7 +21,7 @@ export function FileUploader({ imageUrl, onFieldChange, setFiles }: FileUploader
 
     setFiles(acceptedFiles as File[])
     onFieldChange(convertFileToUrl(acceptedFiles[0]))
-    
+
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -32,7 +32,7 @@ export function FileUploader({ imageUrl, onFieldChange, setFiles }: FileUploader
   return (
     <div
       {...getRootProps()}
-      className="flex-center bg-dark-3 flex h-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-grey-50">
+      className="flex-center flex h-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-grey-50">
       <input {...getInputProps()} className="cursor-pointer" />
 
       {imageUrl ? (
