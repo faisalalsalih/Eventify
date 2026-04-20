@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Select,
   SelectContent,
@@ -17,7 +19,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
 import { Input } from "../ui/input"
@@ -31,61 +32,84 @@ type DropdownProps = {
 const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
   const [categories, setCategories] = useState<ICategory[]>([])
   const [newCategory, setNewCategory] = useState('');
+  const [open, setOpen] = useState(false); // Track the dialog state
 
   const handleAddCategory = () => {
-    createCategory({
-      categoryName: newCategory.trim()
-    })
+    if(!newCategory.trim()) return;
+    createCategory({ categoryName: newCategory.trim() })
       .then((category) => {
         setCategories((prevState) => [...prevState, category])
+        setNewCategory('')
+        setOpen(false) // Close dialog
       })
   }
 
   useEffect(() => {
     const getCategories = async () => {
       const categoryList = await getAllCategories();
-
       categoryList && setCategories(categoryList as ICategory[])
     }
-
     getCategories();
   }, [])
 
   return (
-    <Select onValueChange={onChangeHandler} defaultValue={value}>
+    <>
+      <Select 
+        onValueChange={(value) => {
+          if (value === 'unassigned') {
+            setOpen(true) // Open the dialog if they click "Add new"
+          } else {
+            onChangeHandler?.(value)
+          }
+        }} 
+        defaultValue={value}
+      >
+        <SelectTrigger className="select-field w-full">
+          <SelectValue placeholder="Category" />
+        </SelectTrigger>
 
-      <SelectTrigger className="select-field">
-        <SelectValue placeholder="Category" />
-      </SelectTrigger>
+        <SelectContent>
+          {categories.length > 0 && categories.map((category) => (
+            <SelectItem key={category._id} value={category._id} className="select-item p-regular-14">
+              {category.name}
+            </SelectItem>
+          ))}
 
-      <SelectContent>
-        {categories.length > 0 && categories.map((category) => (
-          <SelectItem key={category._id} value={category._id} className="select-item p-regular-14">
-            {category.name}
+          {/* This is now a fake item that triggers the modal */}
+          <SelectItem value="unassigned" className="p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500">
+            Add new category
           </SelectItem>
-        ))}
+        </SelectContent>
+      </Select>
 
-        <AlertDialog>
-          <AlertDialogTrigger className="p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500">Add new category</AlertDialogTrigger>
-          <AlertDialogContent className="bg-white">
-            <AlertDialogHeader>
-              <AlertDialogTitle>New Category</AlertDialogTitle>
-              <AlertDialogDescription>
-                <Input type="text" placeholder="Category name" className="input-field mt-3" onChange={(e) => setNewCategory(e.target.value)} />
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => startTransition(handleAddCategory)}>Add</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </SelectContent>
-      
-    </Select>
+      {/* FIXED: Moving the Dialog OUTSIDE the Select stops the focus/aria-hidden war */}
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent className="bg-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle>New Category</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="mt-3">
+                <Input 
+                  type="text"
+                  placeholder="Category name"
+                  className="input-field mt-3"
+                  value={newCategory}
+                  autoFocus
+                  onChange={(e) => setNewCategory(e.target.value)}
+                />
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => startTransition(handleAddCategory)}>
+              Add
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   )
 }
 
 export default Dropdown
-
-
