@@ -1,4 +1,4 @@
-import React, { startTransition, useState } from 'react'
+import React, { useState } from 'react'
 
 import {
   Select,
@@ -11,7 +11,6 @@ import {
 
 import { ICategory } from '@/lib/mongodb/database/models/category.model'
 import { Input } from '../ui/input'
-
 
 import {
   AlertDialog,
@@ -30,18 +29,12 @@ import {
 
 type DropdownProps = {
     value?: string,
-    onChangeHandler?: () => void
+    onChangeHandler?: (value: string) => void
 }
 
 const Dropdown = ({ value, onChangeHandler}: DropdownProps) => {
 
     const [categories, setCategories] = useState<ICategory[]>([]);
-    const [newCategory, setNewCategory] = useState('');
-
-
-    const handleAddCategory = () => {
-      
-    }
 
   return (
     <>
@@ -69,12 +62,12 @@ const Dropdown = ({ value, onChangeHandler}: DropdownProps) => {
             <AlertDialogHeader>
               <AlertDialogTitle>New Category</AlertDialogTitle>
               <AlertDialogDescription>
-                <Input type="text" placeholder="Category name" className="input-field mt-3" onChange={(e) => setNewCategory(e.target.value)}/>
+                <Input type="text" placeholder="Category name" className="input-field mt-3" onChange={(e) => onChangeHandler?.(e.target.value)}/>
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => startTransition(handleAddCategory)}>Add</AlertDialogAction>
+              <AlertDialogAction>Add</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

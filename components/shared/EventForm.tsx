@@ -15,6 +15,8 @@ import { useState } from "react";
 import Image from "next/image";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import { Checkbox } from "../ui/checkbox";
+
 
 
 type EventFormProps = {
@@ -33,12 +35,18 @@ const EventForm = ({userId, type}: EventFormProps) => {
     defaultValues: initialValues
   })
 
+  function onsubmit(values: z.infer<typeof eventFormSchema>) {
+    console.log(values);
+  }
+
+
+
   
   return (
     <>
       <Form {...form}>
         
-        <form className="flex flex-col gap-5">
+        <form className="flex flex-col gap-5" onSubmit={form.handleSubmit(onsubmit)}>
 
         {/* Form First Row */}
 
@@ -201,9 +209,81 @@ const EventForm = ({userId, type}: EventFormProps) => {
         </div>
 
 
-        <Button type="submit" size="lg" className="button col-span-2 w-full">
-          Submit
+
+        {/* Form Fifth Row */}
+
+        <div className="flex flex-col gap-5 md:flex-row">
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                      <Image
+                        src="/assets/icons/dollar.svg"
+                        alt="dollar"
+                        width={24}
+                        height={24}
+                        className="filter-grey"
+                      />
+                      <Input type="number" placeholder="Price" {...field} className="p-regular-16 border-0 bg-grey-50 outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0" />
+                      <FormField
+                        control={form.control}
+                        name="isFree"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <div className="flex items-center">
+                                <label htmlFor="isFree" className="whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Free Ticket</label>
+                                <Checkbox
+                                  onCheckedChange={field.onChange}
+                                  checked={field.value}
+                                id="isFree" className="mr-2 h-5 w-5 border-2 border-primary-500" />
+                              </div>
+          
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />   
+                    </div>
+
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />   
+           <FormField
+              control={form.control}
+              name="url"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                      <Image
+                        src="/assets/icons/link.svg"
+                        alt="link"
+                        width={24}
+                        height={24}
+                      />
+
+                      <Input placeholder="URL" {...field} className="input-field" />
+                    </div>
+
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+        </div>
+
+
+        <Button type="submit" size="lg" className="button col-span-2 w-full" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? ('Submitting...') : `${type} Event `}
         </Button>
+
+
         </form>
       </Form>
     </>
