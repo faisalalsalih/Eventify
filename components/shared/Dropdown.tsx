@@ -32,15 +32,20 @@ type DropdownProps = {
 const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
   const [categories, setCategories] = useState<ICategory[]>([])
   const [newCategory, setNewCategory] = useState('');
-  const [open, setOpen] = useState(false); // Track the dialog state
+  const [open, setOpen] = useState(false);
 
   const handleAddCategory = () => {
     if(!newCategory.trim()) return;
+
     createCategory({ categoryName: newCategory.trim() })
       .then((category) => {
         setCategories((prevState) => [...prevState, category])
         setNewCategory('')
-        setOpen(false) // Close dialog
+        setOpen(false) 
+        
+        // CRITICAL: Update the form value to the new category ID
+        // This resets the Select so "unassigned" is no longer the active value
+        onChangeHandler?.(category._id)
       })
   }
 
@@ -55,35 +60,43 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
   return (
     <>
       <Select 
-        onValueChange={(value) => {
-          if (value === 'unassigned') {
-            setOpen(true) // Open the dialog if they click "Add new"
+        onValueChange={(val) => {
+          if (val === 'unassigned') {
+            setOpen(true)
           } else {
-            onChangeHandler?.(value)
+            onChangeHandler?.(val)
           }
         }} 
-        defaultValue={value}
+        // Use value instead of defaultValue to make it controlled
+        value={value}
       >
         <SelectTrigger className="select-field w-full">
           <SelectValue placeholder="Category" />
         </SelectTrigger>
 
         <SelectContent>
+
           {categories.length > 0 && categories.map((category) => (
             <SelectItem key={category._id} value={category._id} className="select-item p-regular-14">
               {category.name}
             </SelectItem>
           ))}
 
-          {/* This is now a fake item that triggers the modal */}
-          <SelectItem value="unassigned" className="p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500">
+          <SelectItem value="unassigned" className="cursor-pointer p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500">
             Add new category
           </SelectItem>
+
         </SelectContent>
       </Select>
 
-      {/* FIXED: Moving the Dialog OUTSIDE the Select stops the focus/aria-hidden war */}
-      <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialog open={open} onOpenChange={(isOpen) => {
+          setOpen(isOpen)
+          // If the user closes the modal without adding, reset the form value 
+          // so they can click "Add new" again.
+          if(!isOpen && value === "unassigned") {
+            onChangeHandler?.("")
+          }
+        }}>
         <AlertDialogContent className="bg-white">
           <AlertDialogHeader>
             <AlertDialogTitle>New Category</AlertDialogTitle>
@@ -100,6 +113,7 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
+          
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={() => startTransition(handleAddCategory)}>

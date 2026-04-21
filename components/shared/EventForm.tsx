@@ -16,6 +16,7 @@ import Image from "next/image";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { Checkbox } from "../ui/checkbox";
+import { useUploadThing } from "@/lib/uploadthing";
 
 
 
@@ -27,16 +28,32 @@ type EventFormProps = {
 const EventForm = ({userId, type}: EventFormProps) => {
 
   const [files, setFiles] = useState<File[]>([])
-
   const initialValues = eventDefaultValues
+
+  const { startUpload } = useUploadThing('imageUploader');
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: initialValues
   })
 
-  function onsubmit(values: z.infer<typeof eventFormSchema>) {
-    console.log(values);
+  async function onsubmit(values: z.infer<typeof eventFormSchema>) {
+
+    const eventData = values;
+
+    let uploadedImageUrl = values.imageUrl;
+
+    if(files.length > 0){
+
+    const uploadedImages = await startUpload(files);
+
+    if(!uploadedImages){
+      return
+    }
+
+    uploadedImageUrl = uploadedImages[0].url;
+
+    }
   }
 
 
