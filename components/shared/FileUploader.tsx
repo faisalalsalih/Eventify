@@ -1,13 +1,11 @@
 'use client'
 
 import { useCallback, Dispatch, SetStateAction } from 'react'
-import type { FileWithPath } from '@uploadthing/react'
-import { useDropzone } from '@uploadthing/react/hooks'
-import { generateClientDropzoneAccept } from 'uploadthing/client'
+import { useDropzone } from 'react-dropzone'
+
+
 import { Button } from '@/components/ui/button'
 import { convertFileToUrl } from '@/lib/utils'
-
-
 
 type FileUploaderProps = {
   onFieldChange: (url: string) => void
@@ -16,23 +14,20 @@ type FileUploaderProps = {
 }
 
 export function FileUploader({ imageUrl, onFieldChange, setFiles }: FileUploaderProps) {
-
-  const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
-
-    setFiles(acceptedFiles as File[])
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles(acceptedFiles)
     onFieldChange(convertFileToUrl(acceptedFiles[0]))
-
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: generateClientDropzoneAccept(['image/*'])
+    accept: { 'image/*': []}
   })
 
   return (
     <div
       {...getRootProps()}
-      className="flex-center flex h-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-grey-50">
+      className="flex-center bg-dark-3 flex h-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-grey-50">
       <input {...getInputProps()} className="cursor-pointer" />
 
       {imageUrl ? (
@@ -58,6 +53,3 @@ export function FileUploader({ imageUrl, onFieldChange, setFiles }: FileUploader
     </div>
   )
 }
-
-
-
