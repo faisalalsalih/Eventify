@@ -6,6 +6,7 @@ import Event from "../mongodb/database/models/event.model"
 import User from "../mongodb/database/models/user.model"
 import { CreateEventParams } from "@/types";
 import Category from "../mongodb/database/models/category.model";
+import { revalidatePath } from "next/cache";
 
 
 const populateEvent = async (query: any) => {
@@ -18,7 +19,7 @@ export const CreateEvent = async ({event, userId, path}: CreateEventParams) => {
         
         await connectToDatabase();
 
-        const organizer = await populateEvent(User.findById(userId));
+        const organizer = await User.findById(userId);
 
         if(!organizer){
             throw new Error("Organizer not found");
@@ -28,7 +29,9 @@ export const CreateEvent = async ({event, userId, path}: CreateEventParams) => {
             ...event,
             category: event.categoryId,
             organizer: userId
-        })
+        });
+
+        revalidatePath(path);
 
 
         return JSON.parse(JSON.stringify(newEvent));
@@ -38,7 +41,6 @@ export const CreateEvent = async ({event, userId, path}: CreateEventParams) => {
         handleError(error);
     }
 }
-
 
 export const getEventById = async (eventId: string) => {
     try {
@@ -58,4 +60,8 @@ export const getEventById = async (eventId: string) => {
         handleError(error);
     }
 }
+
+
+
+
 
