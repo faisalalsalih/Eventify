@@ -4,7 +4,7 @@ import { connectToDatabase } from "../mongodb/database"
 import { handleError } from "../utils";
 import Event from "../mongodb/database/models/event.model"
 import User from "../mongodb/database/models/user.model"
-import { CreateEventParams } from "@/types";
+import { CreateEventParams, GetAllEventsParams } from "@/types";
 import Category from "../mongodb/database/models/category.model";
 import { revalidatePath } from "next/cache";
 
@@ -65,3 +65,32 @@ export const getEventById = async (eventId: string) => {
 
 
 
+export const getAllEvents = async ({ query, limit = 6, page, category}: GetAllEventsParams) => {
+    try {
+        
+        await connectToDatabase();
+
+        const conditions = {};
+
+        const eventQuery = Event.find(conditions)
+        .sort({createdAt: 'desc'})
+        .skip(0)
+        .limit(limit);
+
+
+        const events = await populateEvent(eventQuery);
+        const eventsCount = await Event.countDocuments(conditions);
+
+        
+
+
+        return {
+            data: JSON.parse(JSON.stringify(events)),
+            totalPages: Math.ceil(eventsCount / limit)
+        }
+
+
+    } catch (error) {
+        handleError(error);
+    }
+}
