@@ -43,7 +43,7 @@ const EventDetails = async ({ params: { id } } : SearchParamProps) => {
                 </p>
 
                 <p className="p-medium-16 rounded-full bg-grey-500/10 px-4 py-2.5 text-gray-500">
-                {event.category.name}
+                {event?.category?.name ? event.category.name : 'Uncategorized'}
                 </p>
 
               </div>
