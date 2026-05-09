@@ -46,8 +46,7 @@ const ProfilePage = async () => {
       limit={6}
       page={1}
       totalPages={2}
-      urlParamName="ordersPage"
-      totalPages={2} />
+      urlParamName="ordersPage" />
 
 
     </section> */}
