@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { formatDateTime } from '@/lib/utils'
 import Collection from '@/components/shared/Collection'
 import { SearchParamProps } from '@/types'
+import CheckoutButton from '@/components/shared/CheckoutButton'
 
 
 const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) => {
@@ -72,6 +73,7 @@ const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) =
 
 
           {/* Checkout Button */}
+          <CheckoutButton event={event}/>
 
           {/* Child 2 */}
           <div className='flex flex-col gap-5'>
