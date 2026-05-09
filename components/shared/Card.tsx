@@ -75,7 +75,7 @@ const Card = ({ event, hasOrderLinked, hidePrice }: CardProps) => {
         </p>
 
         <Link href={`/events/${event._id}`}>
-        <p className="p-medium-16 md:p-medium-20 line-clamp-2">
+        <p className="p-medium-16 md:p-medium-20 line-clamp-2 truncate">
           {event.title}
         </p>
         </Link>
