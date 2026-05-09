@@ -83,8 +83,7 @@ const ProfilePage = async () => {
       limit={6}
       page={1}
       totalPages={2}
-      urlParamName="eventsPage"
-      totalPages={2} />
+      urlParamName="eventsPage" />
 
 
     </section>
