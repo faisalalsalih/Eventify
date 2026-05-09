@@ -5,6 +5,7 @@ import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 // import { cn } from "@/lib/utils";
 
+export const runtime = "nodejs";
 
 
 const poppins = Poppins({
