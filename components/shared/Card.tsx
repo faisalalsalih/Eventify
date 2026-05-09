@@ -63,7 +63,7 @@ const Card = ({ event, hasOrderLinked, hidePrice }: CardProps) => {
             {event.isFree ? 'FREE' : `$${event.price}`}
           </span>
 
-          <p className="p-semibold-14 w-min rounded-full bg-grey-500/10 px-4 py-1 text-grey-500">
+          <p className="p-semibold-14 w-min rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 truncate">
             {event?.category?.name ? event.category.name : 'Uncategorized'}
           </p>
         </div>
@@ -75,7 +75,7 @@ const Card = ({ event, hasOrderLinked, hidePrice }: CardProps) => {
         </p>
 
         <Link href={`/events/${event._id}`}>
-        <p className="p-medium-16 md:p-medium-20 line-clamp-2 truncate">
+        <p className="p-medium-16 md:p-medium-20 line-clamp-2">
           {event.title}
         </p>
         </Link>
