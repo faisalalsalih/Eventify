@@ -113,3 +113,7 @@ const Card = ({ event, hasOrderLinked, hidePrice }: CardProps) => {
 }
 
 export default Card
+
+
+
+

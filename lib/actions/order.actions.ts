@@ -7,7 +7,7 @@ import { handleError } from '../utils';
 import { connectToDatabase } from '../mongodb/database';
 import Order from '../mongodb/database/models/order.model';
 import Event from '../mongodb/database/models/event.model';
-import {ObjectId} from 'mongodb';
+import { ObjectId } from 'mongodb';
 import User from '../mongodb/database/models/user.model';
 
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
