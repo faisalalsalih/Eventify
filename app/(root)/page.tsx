@@ -6,6 +6,7 @@ import { getAllEvents } from "@/lib/actions/event.actions";
 import dns from "dns";
 import { Search } from "lucide-react";
 import { SearchParamProps } from "@/types";
+import CategoryFilter from "@/components/shared/CategoryFilter";
 dns.setDefaultResultOrder("ipv4first");
 
 
@@ -16,9 +17,6 @@ export default async function Home({ searchParams }: SearchParamProps) {
   const searchText = (searchParams?.query as string) || '';
 
   const category = (searchParams?.category as string) || '';
-
-
-
 
 
 
@@ -63,8 +61,8 @@ export default async function Home({ searchParams }: SearchParamProps) {
       <h2 className="h2-bold">Trust by <br /> Thousands of Events</h2>
 
       <div className="flex flex-col w-full gap-5 md:flex-row">
-        <Search />
-        CategoryFilter
+        <Search  />
+        <CategoryFilter />
       </div>
 
 
