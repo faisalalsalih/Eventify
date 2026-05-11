@@ -3,6 +3,7 @@
 import { IEvent } from '@/lib/mongodb/database/models/event.model'
 import React from 'react'
 import Card from './Card'
+import Pagination from './Pagination'
 
 
 type CollectionProps = {
@@ -44,6 +45,13 @@ const Collection = ({ data,
                         })
                     }
                 </ul>
+
+                {
+                    totalPages > 1 && (
+                        <Pagination urlParamName={urlParamName}
+                        page={page} totalPages={totalPages}/>
+                    )
+                }
 
             </div>
         ): (
