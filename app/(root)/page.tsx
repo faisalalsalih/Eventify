@@ -4,7 +4,7 @@ import Link from "next/link";
 import Collection from "@/components/shared/Collection";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import dns from "dns";
-import { Search } from "lucide-react";
+import  Search  from "@/components/shared/Search";
 import { SearchParamProps } from "@/types";
 import CategoryFilter from "@/components/shared/CategoryFilter";
 dns.setDefaultResultOrder("ipv4first");
