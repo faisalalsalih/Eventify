@@ -4,15 +4,28 @@ import Link from "next/link";
 import Collection from "@/components/shared/Collection";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import dns from "dns";
+import { Search } from "lucide-react";
+import { SearchParamProps } from "@/types";
 dns.setDefaultResultOrder("ipv4first");
 
 
-export default async function Home() {
+export default async function Home({ searchParams }: SearchParamProps) {
+
+  const page = Number(searchParams?.page) || 1;
+
+  const searchText = (searchParams?.query as string) || '';
+
+  const category = (searchParams?.category as string) || '';
+
+
+
+
+
 
   const events = await getAllEvents({
-    query: '',
-    category: '',
-    page: 1,
+    query: searchText,
+    category,
+    page,
     limit: 6
   })
 
@@ -50,7 +63,7 @@ export default async function Home() {
       <h2 className="h2-bold">Trust by <br /> Thousands of Events</h2>
 
       <div className="flex flex-col w-full gap-5 md:flex-row">
-        Search
+        <Search />
         CategoryFilter
       </div>
 
