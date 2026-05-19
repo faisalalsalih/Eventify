@@ -14,8 +14,10 @@ export async function createUser(user: CreateUserParams) {
   try {
     await connectToDatabase()
 
-    const newUser = await User.create(user)
+    const newUser = await User.create(user);
+
     return JSON.parse(JSON.stringify(newUser))
+
   } catch (error) {
     handleError(error)
   }
@@ -41,7 +43,9 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     const updatedUser = await User.findOneAndUpdate({ clerkId }, user, { new: true })
 
     if (!updatedUser) throw new Error('User update failed')
+
     return JSON.parse(JSON.stringify(updatedUser))
+
   } catch (error) {
     handleError(error)
   }
@@ -67,7 +71,11 @@ export async function deleteUser(clerkId: string) {
       ),
 
       // Update the 'orders' collection to remove references to the user
-      Order.updateMany({ _id: { $in: userToDelete.orders } }, { $unset: { buyer: 1 } }),
+      Order.updateMany(
+        { _id: { $in: userToDelete.orders } },
+        { $unset: { buyer: 1 } }
+      ),
+
     ])
 
     // Delete user
@@ -75,6 +83,7 @@ export async function deleteUser(clerkId: string) {
     revalidatePath('/')
 
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null
+    
   } catch (error) {
     handleError(error)
   }

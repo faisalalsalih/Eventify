@@ -39,6 +39,7 @@ export async function createEvent({ userId, event, path }: CreateEventParams) {
     revalidatePath(path)
 
     return JSON.parse(JSON.stringify(newEvent))
+
   } catch (error) {
     handleError(error)
   }
@@ -47,6 +48,7 @@ export async function createEvent({ userId, event, path }: CreateEventParams) {
 // GET ONE EVENT BY ID
 export async function getEventById(eventId: string) {
   try {
+
     await connectToDatabase()
 
     const event = await populateEvent(Event.findById(eventId))
@@ -54,8 +56,11 @@ export async function getEventById(eventId: string) {
     if (!event) throw new Error('Event not found')
 
     return JSON.parse(JSON.stringify(event))
+
   } catch (error) {
+
     handleError(error)
+    
   }
 }
 

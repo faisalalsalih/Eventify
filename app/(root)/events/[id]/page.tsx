@@ -22,19 +22,17 @@ const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) =
   return (
     <>
     
-    
-    
     <section className='flex justify-center bg-primary-50 bg-dotted-pattern bg-contain'>
 
       {/* Parent Div with his 2 big childs */}
-      <div className='grid grid-cols-1 md:grid-cols-2 2xl:max-w-7xl'>
+      <div className="grid grid-cols-1 md:grid-cols-2 2xl:max-w-7xl">
         
         {/* Child 1 */}
         <Image
         src={event.imageUrl}
         alt={event.title} 
         width={1000}
-        height={1000}
+        height={800}
         className="h-full min-h-[300px] object-cover object-center"
         />
 

@@ -70,6 +70,7 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
         // Use value instead of defaultValue to make it controlled
         value={value}
       >
+
         <SelectTrigger className="select-field w-full">
           <SelectValue placeholder="Category" />
         </SelectTrigger>
@@ -77,9 +78,11 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
         <SelectContent>
 
           {categories.length > 0 && categories.map((category) => (
+
             <SelectItem key={category._id.toString()} value={category._id.toString()} className="select-item p-regular-14">
               {category.name}
             </SelectItem>
+
           ))}
 
           <SelectItem value="unassigned" className="cursor-pointer p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500">
@@ -87,6 +90,7 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
           </SelectItem>
 
         </SelectContent>
+
       </Select>
 
       <AlertDialog open={open} onOpenChange={(isOpen) => {
@@ -98,6 +102,7 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
           }
         }}>
         <AlertDialogContent className="bg-white">
+
           <AlertDialogHeader>
             <AlertDialogTitle>New Category</AlertDialogTitle>
             <AlertDialogDescription asChild>
@@ -120,6 +125,7 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
               Add
             </AlertDialogAction>
           </AlertDialogFooter>
+
         </AlertDialogContent>
       </AlertDialog>
     </>
