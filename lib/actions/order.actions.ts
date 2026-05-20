@@ -30,8 +30,8 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
         },
       ],
       metadata: {
-        eventId: order.eventId,
-        buyerId: order.buyerId,
+        eventId: order.eventId.toString(),
+        buyerId: order.buyerId.toString(),
       },
       mode: 'payment',
       success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/profile`,
@@ -50,8 +50,8 @@ export const createOrder = async (order: CreateOrderParams) => {
     
     const newOrder = await Order.create({
       ...order,
-      event: order.eventId,
-      buyer: order.buyerId,
+      event: order.eventId.toString(),
+      buyer: order.buyerId.toString()
     });
 
     return JSON.parse(JSON.stringify(newOrder));
@@ -146,3 +146,4 @@ export async function getOrdersByUser({ userId, limit = 3, page }: GetOrdersByUs
     handleError(error)
   }
 }
+
