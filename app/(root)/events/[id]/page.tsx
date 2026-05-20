@@ -5,6 +5,7 @@ import { formatDateTime } from '@/lib/utils'
 import Collection from '@/components/shared/Collection'
 import { SearchParamProps } from '@/types'
 import CheckoutButton from '@/components/shared/CheckoutButton'
+import Link from 'next/link'
 
 
 const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) => {
@@ -32,7 +33,7 @@ const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) =
         src={event.imageUrl}
         alt={event.title} 
         width={1000}
-        height={800}
+        height={1000}
         className="h-full min-h-[300px] object-cover object-center"
         />
 
@@ -85,7 +86,7 @@ const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) =
                   {formatDateTime(event.startDateTime).dateOnly} - {' '}
                   {formatDateTime(event.startDateTime).timeOnly}
                 </p>
-                <p>
+                <p className="ml-1">
                   {formatDateTime(event.endDateTime).dateOnly} - {' '}
                   {formatDateTime(event.endDateTime).timeOnly}
                 </p>
@@ -104,6 +105,7 @@ const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) =
 
           {/* Child 3 */}
           <div className="flex flex-col gap-2">
+
             <p className="p-bold-20 text-gray-600">
               What You'll Learn:
             </p>
@@ -112,9 +114,9 @@ const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) =
               {event.description}
             </p>
 
-            <p className="p-medium-16 lg:p-regular-18 cursor-pointer truncate text-primary-500 underline">
+            <Link href={event.url} target="_blank" className="p-medium-16 lg:p-regular-18 cursor-pointer truncate text-primary-500 underline">
               {event.url}
-            </p>
+            </Link>
 
           </div>
 

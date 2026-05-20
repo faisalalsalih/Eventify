@@ -33,8 +33,8 @@ const Card = ({ event, hasOrderLinked, hidePrice }: CardProps) => {
     hover:shadow-lg">
 
       <Link href={`/events/${event._id}`}
-        style={{ backgroundImage: `url(${event.imageUrl})` }}
-        className="flex-center flex-grow bg-gray-50 bg-cover
+      style={{ backgroundImage: `url(${event.imageUrl})` }}
+      className="flex-center flex-grow bg-gray-50 bg-cover
       bg-center text-gray-500" />
 
 

@@ -24,7 +24,7 @@ const Collection = ({ data,
     totalPages,
     collectionType,
     urlParamName,
-    limit }: CollectionProps) => {
+    limit } : CollectionProps) => {
     return (
         <>
         {data.length > 0 ? (
