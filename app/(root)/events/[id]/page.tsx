@@ -76,10 +76,12 @@ const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) =
 
           {
             iMadeThis ? (
-            <Link href={`/events/${event._id}/update`}>
+
+            <Link href={`/events/${event._id}/update`} className="flex items-center gap-3">
             <Image src="/assets/icons/edit.svg" alt="edit" width={30} height={30}/>
-            <p className='p-regular-16 md:p-regular-18 text-primary-500'>Edit Event</p>
+            <p className='p-semibold-18 md:p-semibold-20 text-primary-500'>Edit Event</p>
             </Link>
+
             ) : (
               <CheckoutButton event={event}/>
             )
