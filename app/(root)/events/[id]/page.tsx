@@ -77,7 +77,7 @@ const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) =
           {
             iMadeThis ? (
             <Link href={`/events/${event._id}/update`}>
-            <Image src="/assets/icons/edit.svg" alt="edit" width={20} height={20}/>
+            <Image src="/assets/icons/edit.svg" alt="edit" width={30} height={30}/>
             </Link>
             ) : (
               <CheckoutButton event={event}/>
