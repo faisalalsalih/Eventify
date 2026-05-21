@@ -39,6 +39,7 @@ const Card = ({ event, hasOrderLinked, hidePrice }: CardProps) => {
 
 
       {/* Show Edit & Delete Icon To The Creator of the Post */}
+      
       {
         isEventCreator && !hidePrice && (
           <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">

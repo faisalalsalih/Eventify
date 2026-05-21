@@ -6,11 +6,15 @@ import Collection from '@/components/shared/Collection'
 import { SearchParamProps } from '@/types'
 import CheckoutButton from '@/components/shared/CheckoutButton'
 import Link from 'next/link'
+import { auth } from '@clerk/nextjs/server'
 
 
 const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) => {
 
   const event = await getEventById(id);
+
+
+  const iMadeThis = event.organizer._id.toString() === (await auth()).sessionClaims?.userId;
 
 
   const relatedEvents = await getRelatedEventsByCategory({
@@ -70,9 +74,16 @@ const EventDetails = async ({ params: { id }, searchParams}: SearchParamProps) =
             </div>
           </div>
 
-
-          {/* Checkout Button */}
-          <CheckoutButton event={event}/>
+          {
+            iMadeThis ? (
+            <Link href={`/events/${event._id}/update`}>
+            <Image src="/assets/icons/edit.svg" alt="edit" width={20} height={20}/>
+            </Link>
+            ) : (
+              <CheckoutButton event={event}/>
+            )
+          }
+          
 
           {/* Child 2 */}
           <div className='flex flex-col gap-5'>

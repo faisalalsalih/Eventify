@@ -55,6 +55,7 @@ export const createOrder = async (order: CreateOrderParams) => {
     });
 
     return JSON.parse(JSON.stringify(newOrder));
+    
   } catch (error) {
     handleError(error);
   }

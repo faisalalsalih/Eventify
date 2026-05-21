@@ -35,17 +35,15 @@ export async function POST(request: Request) {
       eventId: metadata?.eventId || '',
       buyerId: metadata?.buyerId || '',
       totalAmount: amount_total ? (amount_total / 100).toString() : '0',
-      createdAt: new Date()
+      createdAt: new Date(),
     }
 
     const newOrder = await createOrder(order);
-
-    console.log(newOrder);
-
     return NextResponse.json({ message: 'OK', order: newOrder })
   }
 
   return new Response('', { status: 200 })
+
 }
 
 
